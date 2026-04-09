@@ -34,10 +34,10 @@ function App() {
     const [serverError, setServerError] = useState("");
     const [events, setEvents] = useState(new Array<NoteResponse>());
 
-    const updateEventsHandler = updateOnlineNotes(setEvents);
+    const updateNotesHandler = updateNotes(setEvents);
 
     useEffect(() => {
-        updateEventsHandler();
+        updateNotesHandler();
     }, [requestedUpdate.value]);
 
     useEffect(() => {
@@ -49,7 +49,7 @@ function App() {
             <div className='view'>
                 <TitleBar title='Note Light' showLogin={showLogin} user={user} show={show}/>
                 <Suspense fallback={<Spinner />}>
-                    <EventList show={show} items={events} update={ updateEventsHandler } />
+                    <EventList show={show} items={events} update={ updateNotesHandler } />
                 </Suspense>
                 <Suspense fallback={<Spinner />}>
                     {(show.value.noteID != "none" && show.value.view == "" ) &&
@@ -57,7 +57,7 @@ function App() {
                     {["account", "inspect"].includes(show.value.view) &&
                         <UserForm user={user} show={show} />}
                     {show.value.view == "editor" &&
-                        <NoteCreation show={show} user={user} update={ updateEventsHandler } />}
+                        <NoteCreation show={show} user={user} update={ updateNotesHandler } />}
                 </Suspense>
             </div>
             <Suspense>
@@ -76,7 +76,7 @@ function App() {
 export default App
 
 
-function updateOnlineNotes(setEvents: React.Dispatch<React.SetStateAction<NoteResponse[]>>): () => Promise<void> {
+function updateNotes(setEvents: React.Dispatch<React.SetStateAction<NoteResponse[]>>): () => Promise<void> {
     return async () => {
         if (loadingEvents.value == true) {
             return;
@@ -86,6 +86,7 @@ function updateOnlineNotes(setEvents: React.Dispatch<React.SetStateAction<NoteRe
                 const localEvent = loadLocalNote();
                 setEvents([localEvent]);
             } catch {
+                setEvents([]);
             }
             loadingEvents.value = false;
             return;
