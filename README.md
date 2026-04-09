@@ -1,5 +1,12 @@
 # Note-Light
 
+[![Frontend Tests](https://github.com/JValtteri/note-light/actions/workflows/frontend-tests.yml/badge.svg)](https://github.com/JValtteri/note-light/actions/workflows/frontend-tests.yml)
+[![Backend Tests](https://github.com/JValtteri/note-light/actions/workflows/backend-tests.yml/badge.svg)](https://github.com/JValtteri/note-light/actions/workflows/backend-tests.yml)
+[![Docker Image Build](https://github.com/JValtteri/note-light/actions/workflows/build-docker-image.yml/badge.svg)](https://github.com/JValtteri/note-light/actions/workflows/build-docker-image.yml)
+
+![Frontend Coverage](https://github.com/JValtteri/note-light/blob/badges/.badges/main/frontend-coverage-badge.svg)
+![Backend Coverage](https://github.com/JValtteri/note-light/blob/badges/.badges/main/backend-coverage-badge.svg)
+
 ##### Fast, light weight notetaking web-app
 
 ```diff
