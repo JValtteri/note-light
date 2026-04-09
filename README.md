@@ -17,7 +17,8 @@ Offline notes for quick personal notes, when you really need to write something 
 
 ## Planned features
 
-- [ ] Offline notes
+- [x] Offline note
+- [ ] Multiple offline notes
 - [ ] Online notes (with registered users)
 - [ ] Shared notes with a share link
 
