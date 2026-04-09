@@ -51,3 +51,10 @@
 .read-the-docs {
   color: #888;
 }
+
+.detail-time{
+    display: grid;
+    grid-template-columns: 5.5em auto;
+    color: var(--secondary-font-color);
+    font-size: 0.95em;
+}

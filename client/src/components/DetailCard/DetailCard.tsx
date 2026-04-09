@@ -82,11 +82,15 @@ function DetailCard( {show, user, requestedUpdate}: Props ) {
                 <MarkdownRenderer content={noteDetails.Note} />
             </div>
             <hr />
-            <div className={`detail-footer`} hidden={user.value.role != "admin"}>
-                <button>{t("event.signup")}</button>
-                <div className="footer-text">
-                    {t("event.staff")}:
-                </div>
+            <div className="buttons">
+                <button onClick={ () => show.value={
+                        noteID: show.value.noteID
+                        ? show.value.noteID
+                        : "local", view: "editor"
+                    }}>
+                    {t("event.edit event")}
+                </button>
+                <button onClick={ () => setShowDeleteDialog(true) } className="red-button" >{t("event.delete event")}</button>
             </div>
 
             <ConfirmDialog

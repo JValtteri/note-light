@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSignals } from "@preact/signals-react/runtime";
 import { signal, type Signal } from "@preact/signals-react";
 
-import { dateAndTimeToPosix, posixToTime, posixToDate, posixToDateAndTime, posixNow } from "../../utils/utils";
+import { posixToDateAndTime, posixNow } from "../../utils/utils";
 import type { NoteResponse } from "../../api/api";
 import { makeNote, editNote } from "../../api/api";
 import { loadDetails } from "../common/utils";
@@ -12,7 +12,7 @@ import { useTranslation } from "../../context/TranslationContext";
 
 import Frame from "../common/Frame/Frame";
 import Popup from "../Popup/Popup";
-import { saveLocalNote } from "../../api/local";
+import { loadLocalNote, saveLocalNote } from "../../api/local";
 
 
 const timeslotSignal = signal<Map<number, {"Size": number}>>(new Map());
@@ -56,10 +56,12 @@ function NoteCreation ({show, user, update}: Props) {
 
     useEffect( () => {
         setnoteID(show.value.noteID);
-        if (show.value.noteID != "none") {
-            loadDetailsHandler();
-        } else {
+        if (show.value.noteID == "none") {
             clearForm();
+        } else if (show.value.noteID == "local") {
+            setNoteDetails(loadLocalNote());
+        } else {
+            loadDetailsHandler();
         }
     }, [show.value.view, show.value.noteID])
 
@@ -94,6 +96,7 @@ function NoteCreation ({show, user, update}: Props) {
                     }
                 } else {
                     saveLocalNote(noteText, posixNow());
+                    update();
                 }
             } else {
                 if (online) {
@@ -113,6 +116,7 @@ function NoteCreation ({show, user, update}: Props) {
                     setConfirmationDialogVisible(true);
                 } else {
                     saveLocalNote(noteText, createdDt);
+                    update();
                 }
             }
 
@@ -148,23 +152,27 @@ function NoteCreation ({show, user, update}: Props) {
             <Frame className="EventForm" hidden={show.value.view != "editor"}>
                 {noteID != "none" && `${t("note.editing")} #${noteID}`}
                 <div className="header">
-                    <input
-                        id="event-name"
-                        value={noteTitle}
-                        onChange={e => setNoteTitle(e.target.value)}
-                        placeholder={t("note.title")} required>
-                    </input>
+                    <h3>{ `${noteTitle}` }</h3>
                     <div id="close-box">
                         <button id="close" onClick={ () => hideEditor(show) }>{t("common.close")}</button>
                     </div>
                 </div>
-                {noteID}
-                <label className="form-label" htmlFor="start-time">{t("note.created")}</label>
-                <input id="start-time" type="text" value={posixToDateAndTime(createdDt)} disabled></input>
 
-                <label className="form-label" htmlFor="modified-time">{t("note.modified")}</label>
-                <input id="modified-time" type="text" value={posixToDateAndTime(modifiedDt)} disabled></input>
-
+                <div className="detail-time">
+                    <div>
+                        Created:
+                    </div>
+                    <div>
+                        { posixToDateAndTime(noteDetails.DtCreated) }
+                    </div>
+                    <div>
+                        Modified:
+                    </div>
+                    <div>
+                        { posixToDateAndTime(noteDetails.DtModified) }
+                    </div>
+                </div>
+                <br></br>
                 <label className="form-label" htmlFor="note-text">{t("note.text")}</label>
                 <textarea id="event-desctiption" value={noteText} onChange={e => setNoteText(e.target.value)} required></textarea>
 

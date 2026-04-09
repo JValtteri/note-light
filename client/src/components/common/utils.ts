@@ -1,5 +1,6 @@
 import { Signal } from "@preact/signals-react";
 import { authenticate, fetchNote as fetchNote, type NoteResponse } from "../../api/api";
+import { getCookie } from "../../utils/cookie";
 
 
 export function loadDetails(
@@ -33,13 +34,17 @@ export async function resumeSession(
     user: Signal<{ username: string, loggedIn: boolean, role: string}>,
     showLogin: Signal<boolean> | undefined
 ): Promise<void> {
+    const sessionCookie = getCookie("sessionKey");
+    if (!sessionCookie) {
+        return; // Don't send a request if no session key exists.
+    }
     try {
         const auth = await authenticate();
         if ( auth != null ) {
-        if (showLogin) {
-            showLogin.value = false;
-        }
-        user.value = { username: auth.User, loggedIn: true, role: auth.Role};
+            if (showLogin) {
+                showLogin.value = false;
+            }
+            user.value = { username: auth.User, loggedIn: true, role: auth.Role};
         }
     } catch (error) {
         setServerError && setServerError(`${error}`);
