@@ -15,6 +15,7 @@
     },
     "note": {
         "text": " ",
+        "editing": "Editing",
         "created": "Created",
         "modified": "Modified"
     },
@@ -53,6 +54,7 @@
         "password-length": "Error: Password length must be at least {size} characters"
     },
     "warning": {
+        "deleting": "Deleting",
         "deleting account": "Deleting Account: *'{name}'*",
         "confirm-delete-account": "Are you sure you want to delete account '{name}'?",
         "no-takebacks": "This action is not reversible!",

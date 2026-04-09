@@ -70,13 +70,13 @@ function DetailCard( {show, user, requestedUpdate}: Props ) {
                 <button onClick={ handleClose }>{t("common.close")}</button>
                 <div className="detail-time">
                     <div>
-                        Created:
+                        {t("note.created")}:
                     </div>
                     <div>
                         { posixToDateAndTime(noteDetails.DtCreated) }
                     </div>
                     <div>
-                        Modified:
+                        {t("note.modified")}:
                     </div>
                     <div>
                         { posixToDateAndTime(noteDetails.DtModified) }
@@ -109,7 +109,7 @@ function DetailCard( {show, user, requestedUpdate}: Props ) {
                     onCancel={ ()=>setShowDeleteDialog(false) }
                 >
                     <div>
-                        <h2 className='dialog-text'>{t("warning.deleting event")}: <i>"{noteDetails.Title}"</i></h2>
+                        <h2 className='dialog-text'>{t("warning.deleting")}: <i>"{noteDetails.Title}"</i></h2>
                         {show.value.noteID}
                         <p className='dialog-text'>{t("warning.are you sure")}</p>
                         <p className='dialog-text'><b>{t("warning.no-takebacks")}</b></p>

@@ -15,6 +15,7 @@
     },
     "note": {
         "text": " ",
+        "editing": "Muokataan",
         "created": "Luotu",
         "modified": "Muokattu"
     },
@@ -53,6 +54,7 @@
         "password-length": "Salasanan pituus {size} merkkiä"
     },
     "warning": {
+        "deleting": "Olet poistamassa",
         "deleting account": "Poistamassa tiliä: *'{name}'*",
         "confirm-delete-account": "Oletko varma että haluat poistaa tilin '{name}'?",
         "no-takebacks": "Tätä ei voi peruuttaa!",

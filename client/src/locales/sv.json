@@ -53,6 +53,7 @@
         "password-length": "Lösenordets längd {size} tecken"
     },
     "warning": {
+        "deleting": "Vill du ta bort",
         "deleting account": "Tar bort konto: *'{name}'*",
         "confirm-delete-account": "Är du säker på att du vill ta bort kontot '{name}'?",
         "no-takebacks": "Detta kan inte återkallas!",
