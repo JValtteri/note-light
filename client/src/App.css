@@ -23,9 +23,30 @@
   filter: drop-shadow(0 0 2em #70e0fab0);
 }
 
+#title {
+    grid-area: title;
+}
+
+.details {
+    grid-area: details;
+}
+
+.NoteForm{
+    grid-area: details;
+}
+
+.list-body{
+    grid-area: list;
+}
+
+
 @media (max-width: 740px) {
   .view {
-    display:block;
+    grid-template-columns: auto;
+    grid-template-areas:
+    "title ."
+    "details ."
+    "list ."
   }
 }
 

@@ -149,7 +149,7 @@ function NoteCreation ({show, user, update}: Props) {
 
     return (
         <>
-            <Frame className="EventForm" hidden={show.value.view != "editor"}>
+            <Frame className="NoteForm" hidden={show.value.view != "editor"}>
                 {noteID != "none" && `${t("note.editing")} #${noteID}`}
                 <div className="header">
                     <h3>{ `${noteTitle}` }</h3>

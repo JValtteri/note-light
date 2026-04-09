@@ -49,6 +49,7 @@ function DetailCard( {show, user, requestedUpdate}: Props ) {
         } else {
             deleteLocalNote();
             requestUpdate();
+            handleClose();
         }
     }
 
