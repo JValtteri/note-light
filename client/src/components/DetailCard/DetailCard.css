@@ -1,0 +1,23 @@
+.detail-time{
+    display: grid;
+    grid-template-columns: 3em auto;
+    color: var(--secondary-font-color);
+    font-size: 0.95em;
+}
+
+#detail-description{
+    margin: 16px;
+}
+
+.detail-footer {
+    display: grid;
+    grid-template-columns: auto 5em 4em;
+    text-align: right;
+    color: var(--secondary-font-color);
+    font-size: 0.95em;
+    width:inherit;
+}
+
+.footer-text {
+    margin: auto;
+}

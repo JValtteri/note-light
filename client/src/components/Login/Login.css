@@ -1,0 +1,57 @@
+.login {
+    grid-template-areas:
+    "email-label email"
+    "password-label password"
+    "password-confirm-label password-confirm"
+    ". policy-accept"
+    ". new-account"
+    ". register-error"
+    ". ."
+    ". ."
+    "buttons buttons"
+}
+
+label {
+    text-align: left;
+    padding-right: 10px;
+}
+
+#email-label {
+    grid-area: email-label;
+}
+
+#password-label {
+    grid-area: password-label;
+}
+
+#password-confirm-label {
+    grid-area: password-confirm-label;
+}
+
+#email {
+    grid-area: email;
+}
+
+#password {
+    grid-area: password;
+}
+
+#password-confirm {
+    grid-area: password-confirm;
+}
+
+.new-account {
+    grid-area: new-account;
+}
+
+#register-error {
+    grid-area: register-error;
+}
+
+.buttons {
+    grid-area: buttons;
+}
+
+#policy-accept {
+    grid-area: policy-accept;
+}

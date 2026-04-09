@@ -1,0 +1,29 @@
+{
+    "language": "Suomi",
+        "common": {
+        "ok": "Ok",
+        "cancel": "Peruuta",
+        "back": "Peruuta",
+        "apply": "Käytä",
+        "confirm": "Vahvista",
+        "edit": "Muokkaa",
+        "close": "Sulje",
+        "delete": "Poista",
+        "email": "Sähköposti",
+        "password": "Salasana"
+    },
+    "login": {
+        "login": "Kirjaudu",
+        "logout": "Kirjaudu ulos",
+        "signup": "Rekisteröidy",
+        "new account": "Uusi käyttäjä",
+        "policy": "Hyväksyn"
+    },
+    "user": {
+        "current-password": "Nykyinen salasana",
+        "new-password": "Uusi salasana",
+        "confirm-password": "Vahvista salasana",
+        "delete account": "Poista Tili",
+        "confirm delete account": "Vahvista Poisto"
+    }
+}

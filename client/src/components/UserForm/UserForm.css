@@ -1,0 +1,61 @@
+
+#account-editor {
+    grid-template-areas:
+        "password-label password"
+        "new-pass-label new-password"
+        "password-confirm-label password-confirm"
+        ". ."
+        ". ."
+        ". ."
+        "delete-account apply-button";
+}
+
+.account-tab {
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+
+
+#apply-button {
+    grid-area: apply-button;
+}
+
+#delete-account {
+    grid-area: delete-account;
+}
+
+.big-number {
+    margin: 0px;
+    font-size: 1.8em;
+}
+
+.low-profile-label {
+    font-size: 0.8em;
+    color: var(--secondary-font-color);
+    margin-bottom: 0px;
+}
+
+.thin-hr {
+    margin: 24px;
+}
+
+#top-tabs {
+    margin-top: 2em;
+}
+
+.collapsed-frame {
+    padding: 0.6em 1px 1px 1px;
+}
+
+.tabs {
+    text-align: left;
+}
+
+@media (max-width: 800px) {
+    #tabs {
+        grid-template-columns: max-content min-content;
+    }
+    .inner-frame {
+        padding: 1px !important;
+    }
+}

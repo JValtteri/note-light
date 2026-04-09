@@ -1,0 +1,11 @@
+#ok {
+    border-color: var(--focus-color);
+}
+#ok:hover {
+    border-color: var(--active-color);
+}
+
+.main-text {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}

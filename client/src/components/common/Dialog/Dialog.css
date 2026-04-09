@@ -1,0 +1,21 @@
+.dialog{
+    margin: 30px auto;
+    max-width: fit-content;
+    padding: 25px 40px;
+    box-shadow: 0px 5px 18px #000000a1, 0px 0px 18px #00000080, 0px 10px 100px #00000080;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: auto;
+}
+
+.buttons-center {
+  justify-content: center;
+}
+
+[hidden]{
+  display:none;
+}
