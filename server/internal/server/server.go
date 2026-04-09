@@ -1,0 +1,133 @@
+package server
+
+import (
+	"fmt"
+	"log"
+	"time"
+	"sync"
+	"syscall"
+	"context"
+	"net/http"
+	"os/signal"
+
+	c "github.com/JValtteri/note-light/server/internal/config"
+	//R "github.com/JValtteri/note-light/server/internal/server/ratelimiter"
+)
+
+
+var wg sync.WaitGroup
+
+func Server() {
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
+	defer stop()
+
+	c.LoadConfig(c.CONFIG_FILE)
+	/*
+	state.Initialize()
+	setupFirstAdminUser("admin", crypt.CreateHumanReadableKey)
+	*/
+	mux := http.NewServeMux()	// Init server mux
+	setupHandlers(mux)
+	/*
+	state.InitWaitGroup(&wg)	// Adds state.presistance_api to WaitGroup
+	*/
+	go start(newServer(mux, c.CONFIG.SERVER_PORT))
+
+	<-ctx.Done()				// Wait for Ctrl+C or other stop signal
+	//state.Save(c.CONFIG.DB_FILE_NAME)
+	wg.Wait()					// Ensures registered processes are complete before exiting
+}
+
+func setupHandlers(mux *http.ServeMux) {
+	// Set IP based rate limit
+	/*
+	baseRule := R.NewIPLimiterRule(R.RateLimiterConfig{
+		MaxTokens:			c.CONFIG.RATE_LIMIT_BURST,
+		TokensPerMinute:	c.CONFIG.RATE_LIMIT_PER_MINUTE / 2,
+		ResetMinutes:		c.CONFIG.RATE_LIMIT_RESET_MINUTES,
+		AlertLimit:			c.CONFIG.RATE_LIMIT_ALERT,
+	})
+	fastRule := R.NewIPLimiterRule(R.RateLimiterConfig{
+		MaxTokens:			c.CONFIG.RATE_LIMIT_BURST,
+		TokensPerMinute:	c.CONFIG.RATE_LIMIT_PER_MINUTE,
+		ResetMinutes:		c.CONFIG.RATE_LIMIT_RESET_MINUTES,
+		AlertLimit:			c.CONFIG.RATE_LIMIT_ALERT,
+	})
+	*/
+	fileHandler(mux, "/css/",		"/css")
+	fileHandler(mux, "/js/",		"/js")
+	fileHandler(mux, "/img/",		"/img")
+	fileHandler(mux, "/assets/",	"/assets")
+	fileHandler(mux, "/",			"")
+	/*
+	handlerFunc(mux, "POST /api/session/auth",			authenticateSession,	baseRule)
+	handlerFunc(mux, "POST /api/user/login",			loginUser,				baseRule)
+	handlerFunc(mux, "POST /api/user/logout",			logoutUser,				baseRule)
+	handlerFunc(mux, "POST /api/user/list",				userReservations,		baseRule)
+	handlerFunc(mux, "POST /api/user/register",			registerUser,			baseRule)
+	handlerFunc(mux, "POST /api/user/change",			changePassword,			baseRule)
+	handlerFunc(mux, "POST /api/user/delete",			deleteUser,				baseRule)
+	handlerFunc(mux, "POST /api/admin/users",			getAllUsers,			baseRule)
+	handlerFunc(mux, "POST /api/admin/user/delete",		adminDeleteUser,		baseRule)
+	handlerFunc(mux, "POST /api/admin/user/role",		adminChangeUserRole,	baseRule)
+	handlerFunc(mux, "POST /api/admin/user/list",		adminUserReservations,	baseRule)
+	*/
+}
+
+/*
+func handlerFunc(
+	mux *http.ServeMux,
+	pattern string,
+	handler func(w http.ResponseWriter, request *http.Request),
+	limitRule *R.IPLimiter,
+) {
+	mux.HandleFunc(
+		pattern,
+		R.RateLimiter(limitRule,
+			handler,
+		),
+	)
+}
+*/
+
+func fileHandler(mux *http.ServeMux, route string, filePath string) {
+	fileDir := fmt.Sprintf("%s%s", c.CONFIG.SOURCE_DIR, filePath)
+	fileServer := http.FileServer(http.Dir(fileDir))
+	mux.Handle(route, http.StripPrefix(route, fileServer))			// Strip the route prefix and attach the file server
+}
+
+func start(srv *http.Server) {
+	log.Println("Server UP")
+	if c.CONFIG.ENABLE_TLS {
+		err := startTLS(srv)
+		log.Fatal(err)
+	} else {
+		err := startNonTLS(srv)
+		log.Fatal(err)
+	}
+}
+
+func startTLS(srv *http.Server) error {
+	err := srv.ListenAndServeTLS(
+		c.CONFIG.CERT_FILE,
+		c.CONFIG.PRIVATE_KEY_FILE,
+	)
+	return err
+}
+
+func startNonTLS(srv *http.Server) error {
+	err := srv.ListenAndServe()
+	return err
+}
+
+func newServer(mux *http.ServeMux, port string) *http.Server {
+	srv := &http.Server{
+		Addr:			fmt.Sprintf(":%v", port),
+		Handler:		mux,
+		ReadTimeout:	1 * time.Second,
+		WriteTimeout:	3 * time.Second,
+		IdleTimeout:	5 * time.Second,
+		ErrorLog: 		nil,				// nil = uses standard log package
+	}
+	return srv
+}
