@@ -1,0 +1,14 @@
+services:
+  app:
+    image: ghcr.io/jvaltteri/note-light:latest
+    container_name: note-light
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.json:/app/server/config.json:ro
+      - ./db/:/app/server/db/
+      - ./db/:/app/server/notes/
+
+      - ./logo.png:/app/client/dist/logo.png:ro
+
+    restart: unless-stopped
