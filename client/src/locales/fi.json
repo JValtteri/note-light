@@ -1,16 +1,22 @@
 {
     "language": "Suomi",
-        "common": {
+    "common": {
         "ok": "Ok",
         "cancel": "Peruuta",
         "back": "Peruuta",
         "apply": "Käytä",
         "confirm": "Vahvista",
         "edit": "Muokkaa",
+        "save": "Tallenna",
         "close": "Sulje",
         "delete": "Poista",
         "email": "Sähköposti",
         "password": "Salasana"
+    },
+    "note": {
+        "text": " ",
+        "created": "Luotu",
+        "modified": "Muokattu"
     },
     "login": {
         "login": "Kirjaudu",
@@ -25,5 +31,39 @@
         "confirm-password": "Vahvista salasana",
         "delete account": "Poista Tili",
         "confirm delete account": "Vahvista Poisto"
-    }
+    },
+    "tools": {
+        "edit account": "Muokkaa Tiliä",
+        "admin tools": "Admin Työkalut",
+        "all users": "Käyttäjät",
+        "Role": "Rooli",
+        "no-matches": "Ei osumia",
+        "search": "Etsi {name}"
+    },
+    "notification": {
+        "success": "Onnistui"
+    },
+    "error": {
+        "missing name": "Anna **käyttäjätunnus** ja yritä uudelleen.",
+        "concent": {
+            "accept": "Hyväksy",
+            "again": "ja yritä uudelleen",
+            "full": "Hyväksy käyttöehdot"
+        },
+        "password-length": "Salasanan pituus {size} merkkiä"
+    },
+    "warning": {
+        "deleting account": "Poistamassa tiliä: *'{name}'*",
+        "confirm-delete-account": "Oletko varma että haluat poistaa tilin '{name}'?",
+        "no-takebacks": "Tätä ei voi peruuttaa!",
+        "changeing role": "Muutetaan '{name}' rooliksi '{role}'",
+        "are you sure": "Haluatko varmasti tehdä näin?"
+    },
+    "policy": {
+        "name": "käyttöehdot"
+    },
+    "Error: Authentication failed": "Tunnistautuminen epäonnistui",
+    "Username length must be at least 4 characters": "Käyttäjänimen täytyy olla vähintään 4 merkkiä pitkä",
+    "Password length must be at least 3 characters": "Salasanan on oltava vähintään 3 merkkiä pitkä",
+    "error creating client: error: client email not unique": "Käyttäjätunnus on varattu"
 }

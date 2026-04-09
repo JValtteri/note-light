@@ -1,0 +1,69 @@
+{
+    "language": "English",
+    "common": {
+        "ok": "Ok",
+        "cancel": "Cancel",
+        "back": "Back",
+        "apply": "Apply",
+        "confirm": "Confirm",
+        "edit": "Edit",
+        "save": "Save",
+        "close": "Close",
+        "delete": "Delete",
+        "email": "Email",
+        "password": "Password"
+    },
+    "note": {
+        "text": " ",
+        "created": "Created",
+        "modified": "Modified"
+    },
+    "login": {
+        "login": "Sign In",
+        "logout": "Sign Out",
+        "signup": "Sign Up",
+        "new account": "New account",
+        "policy": "I accept the"
+    },
+    "user": {
+        "current-password": "Current password",
+        "New-password": "New password",
+        "confirm-password": "Confirm password",
+        "delete account": "Delete Account",
+        "confirm delete account": "Confirm Delete Account"
+    },
+    "tools": {
+        "edit account": "Edit Account",
+        "admin tools": "Admin Tools",
+        "all users": "All Users",
+        "Role": "Role",
+        "no-matches": "No matches",
+        "search": "Search by {name}"
+    },
+    "notification": {
+        "success": "Success"
+    },
+    "error": {
+        "missing name": "Please enter a **username** and try again.",
+        "concent": {
+            "accept": "Please accept the",
+            "again": "and try again",
+            "full": "Please accept the privacy policy"
+        },
+        "password-length": "Error: Password length must be at least {size} characters"
+    },
+    "warning": {
+        "deleting account": "Deleting Account: *'{name}'*",
+        "confirm-delete-account": "Are you sure you want to delete account '{name}'?",
+        "no-takebacks": "This action is not reversible!",
+        "changeing role": "Changeing: '{name}' to '{role}'",
+        "are you sure": "Are you sure you want to do this?"
+    },
+    "policy": {
+        "name": "privacy policy"
+    },
+    "Error: Authentication failed": "Authentication failed",
+    "Username length must be at least 4 characters": "Username length must be at least 4 characters",
+    "Password length must be at least 3 characters": "Password length must be at least 3 characters",
+    "error creating client: error: client email not unique": "Email not unique"
+}

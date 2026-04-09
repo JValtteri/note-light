@@ -82,7 +82,11 @@ function updateOnlineNotes(setEvents: React.Dispatch<React.SetStateAction<NoteRe
             return;
         }
         if (user.value.loggedIn == false) {
-            setEvents([loadLocalNote()])
+            try {
+                const localEvent = loadLocalNote();
+                setEvents([localEvent]);
+            } catch {
+            }
             loadingEvents.value = false;
             return;
         }

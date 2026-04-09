@@ -177,7 +177,9 @@ function NoteCreation ({show, user, update}: Props) {
                 <textarea id="event-desctiption" value={noteText} onChange={e => setNoteText(e.target.value)} required></textarea>
 
                 <div className="buttons editor-buttons">
-                    <button id="publish" className="selected"  onClick={ () => handleSaveNote(user.value.loggedIn) }>{t("note.save")}</button>
+                    <button id="publish" className="selected"  onClick={ () => handleSaveNote(user.value.loggedIn) }>
+                        {t("common.save")}
+                    </button>
                 </div>
             </Frame>
             <Popup show={confiramtionDialogVisible} onHide={() => setConfirmationDialogVisible(false)}>

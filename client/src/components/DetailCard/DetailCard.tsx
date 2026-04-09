@@ -12,7 +12,7 @@ import { useTranslation } from '../../context/TranslationContext';
 import Frame from "../common/Frame/Frame";
 import ConfirmDialog from '../common/ConfirmDialog/ConfirmDialog';
 import MarkdownRenderer from '../MarkdownRenderer/MarkdownRenderer';
-import { loadLocalNote } from '../../api/local';
+import { deleteLocalNote, loadLocalNote } from '../../api/local';
 
 
 
@@ -36,14 +36,19 @@ function DetailCard( {show, user, requestedUpdate}: Props ) {
     const loadDetailsHandler = loadDetails(show, loadingNotes, setNoteDetails);
 
     const handleDeleteEvent = () => {
-        try {
-            deleteNote(show.value.noteID)
-                .then( () => {
-                    handleClose();
-                    requestUpdate();
-                });
-        } catch (error: any) {
-            console.warn(error.message);
+        if (show.value.noteID) {
+            try {
+                deleteNote(show.value.noteID)
+                    .then( () => {
+                        handleClose();
+                        requestUpdate();
+                    });
+            } catch (error: any) {
+                console.warn(error.message);
+            }
+        } else {
+            deleteLocalNote();
+            requestUpdate();
         }
     }
 
@@ -87,16 +92,18 @@ function DetailCard( {show, user, requestedUpdate}: Props ) {
                         noteID: show.value.noteID
                         ? show.value.noteID
                         : "local", view: "editor"
-                    }}>
-                    {t("event.edit event")}
+                }}>
+                    {t("common.edit")}
                 </button>
-                <button onClick={ () => setShowDeleteDialog(true) } className="red-button" >{t("event.delete event")}</button>
+                <button onClick={ () => setShowDeleteDialog(true) } className="red-button" >
+                    {t("common.delete")}
+                </button>
             </div>
 
             <ConfirmDialog
                     hidden={!showDeleteDialog}
                     className='error'
-                    confirmBtnName={t("event.confirm delete event")}
+                    confirmBtnName={t("common.delete")}
                     confirmBtnClass='red-button'
                     onConfirm={ handleDeleteEvent }
                     onCancel={ ()=>setShowDeleteDialog(false) }
@@ -104,7 +111,7 @@ function DetailCard( {show, user, requestedUpdate}: Props ) {
                     <div>
                         <h2 className='dialog-text'>{t("warning.deleting event")}: <i>"{noteDetails.Title}"</i></h2>
                         {show.value.noteID}
-                        <p className='dialog-text'>{t("warning.are-you-sure-delete-event?")}</p>
+                        <p className='dialog-text'>{t("warning.are you sure")}</p>
                         <p className='dialog-text'><b>{t("warning.no-takebacks")}</b></p>
                     </div>
                 </ConfirmDialog>

@@ -1,0 +1,69 @@
+{
+    "language": "Svenska",
+    "common": {
+        "ok": "Ok",
+        "cancel": "Avbryt",
+        "back": "Tillbaka",
+        "apply": "Använd",
+        "confirm": "Bekräfta",
+        "edit": "Redigera",
+        "save": "",
+        "close": "Stäng",
+        "delete": "Radera",
+        "email": "E-post",
+        "password": "Lösenord"
+    },
+
+
+
+
+
+    "login": {
+        "login": "Logga In",
+        "logout": "Logga Ut",
+        "signup": "Registrera Dig",
+        "new account": "Nytt konto",
+        "policy": "Jag godkänner"
+    },
+    "user": {
+        "current-password": "Nuvarande lösenord",
+        "new-password": "Nytt lösenord",
+        "confirm-password": "Bekräfta lösenord",
+        "delete account": "Radera konto",
+        "confirm delete account": "Bekräfta borttagning"
+    },
+    "tools": {
+        "edit account": "Redigera konto",
+        "admin tools": "Adminverktyg",
+        "all users": "Alla användare",
+        "Role": "Roll",
+        "no-matches": "Inga träffar",
+        "search": "Sök {name}"
+    },
+    "notification": {
+        "success": "Lyckades"
+    },
+    "error": {
+        "missing email": "Ange **namn** och försök igen",
+        "concent": {
+            "accept": "Acceptera",
+            "again": "och försök igen",
+            "full": "Acceptera användarvillkoren"
+        },
+        "password-length": "Lösenordets längd {size} tecken"
+    },
+    "warning": {
+        "deleting account": "Tar bort konto: *'{name}'*",
+        "confirm-delete-account": "Är du säker på att du vill ta bort kontot '{name}'?",
+        "no-takebacks": "Detta kan inte återkallas!",
+        "changeing role": "Ändrar '{name}' roll till '{role}'",
+        "are you sure": "Är du säker på att du vill göra detta?"
+    },
+    "policy": {
+        "name": "användarvillkor"
+    },
+    "Error: Authentication failed": "Autentisering misslyckades",
+    "Username length must be at least 4 characters": "Användarnamnet måste vara minst 4 tecken",
+    "Password length must be at least 3 characters": "Lösenordet måste vara minst 3 tecken",
+    "error creating client: error: client email not unique": "Användarnamnet är redan registrerat"
+}
