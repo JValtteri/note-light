@@ -1,7 +1,5 @@
 // Function is timezone aware
 
-const SECONDS_IN_DAY = 60*60*24
-
 export function dateAndTimeToPosix(dateValue: string, startTimeValue: string): number {
     const dateTimeString = `${dateValue}T${startTimeValue}`;
     const dateObject = new Date(dateTimeString);
@@ -63,29 +61,16 @@ export function isPast(time: number): boolean {
     return time < now;
 }
 
-export function cycleDay(endTT: number) {
-    endTT = endTT + SECONDS_IN_DAY;
-    return endTT;
+/* Converts str to Base64, via uint8
+ */
+export function base64(str: string) {
+    const encoder = new TextEncoder();
+    const utf8Bytes = encoder.encode(str);
+    return btoa(String.fromCharCode(...utf8Bytes));
 }
 
-export function validEmail(email: string): boolean {
-    try {
-        const [local, domain] = email.split('@');
-        if (local.length < 1 || local.length > 64 || domain.length > 63) {
-            return false
-        }
-        const splitDomain = domain.split('.');
-        if (splitDomain.length < 2) {
-            return false
-        }
-        for (const elem of splitDomain) {
-            if ( elem.length === 0 ) {
-                return false;
-            }
-        }
-    } catch (error) {
-        console.warn(`Invalid email: '${email}' ; ${error}`)
-        return false;
-    }
-    return true
+/* Converts Base64 to str, via uint8
+ */
+export function decode64(str: string) {
+    return atob(str);
 }

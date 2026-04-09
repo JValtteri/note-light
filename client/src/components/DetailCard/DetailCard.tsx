@@ -12,6 +12,7 @@ import { useTranslation } from '../../context/TranslationContext';
 import Frame from "../common/Frame/Frame";
 import ConfirmDialog from '../common/ConfirmDialog/ConfirmDialog';
 import MarkdownRenderer from '../MarkdownRenderer/MarkdownRenderer';
+import { loadLocalNote } from '../../api/local';
 
 
 
@@ -47,7 +48,11 @@ function DetailCard( {show, user, requestedUpdate}: Props ) {
     }
 
     useEffect(() => {
-        loadDetailsHandler();
+        if (user.value.loggedIn) {
+            loadDetailsHandler();
+        } else {
+            setNoteDetails(loadLocalNote());
+        }
     }, [show.value.noteID, requestedUpdate.value]);
 
     return (

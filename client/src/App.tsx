@@ -9,6 +9,7 @@ import { fetchNotes, type NoteResponse } from './api/api';
 import Spinner from './components/Spinner/Spinner';
 import TitleBar from './components/TitleBar/TitleBar'
 import { resumeSession } from './components/common/utils';
+import { loadLocalNote } from './api/local';
 
 const EventList = lazy( () => import('./components/NoteList/NoteList'));
 const DetailCard = lazy(() => import('./components/DetailCard/DetailCard'));
@@ -81,6 +82,8 @@ function updateOnlineNotes(setEvents: React.Dispatch<React.SetStateAction<NoteRe
             return;
         }
         if (user.value.loggedIn == false) {
+            setEvents([loadLocalNote()])
+            loadingEvents.value = false;
             return;
         }
         loadingEvents.value = true;

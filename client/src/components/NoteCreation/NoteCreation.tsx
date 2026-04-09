@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSignals } from "@preact/signals-react/runtime";
 import { signal, type Signal } from "@preact/signals-react";
 
-import { dateAndTimeToPosix, posixToTime, posixToDate } from "../../utils/utils";
+import { dateAndTimeToPosix, posixToTime, posixToDate, posixToDateAndTime, posixNow } from "../../utils/utils";
 import type { NoteResponse } from "../../api/api";
 import { makeNote, editNote } from "../../api/api";
 import { loadDetails } from "../common/utils";
@@ -12,6 +12,7 @@ import { useTranslation } from "../../context/TranslationContext";
 
 import Frame from "../common/Frame/Frame";
 import Popup from "../Popup/Popup";
+import { saveLocalNote } from "../../api/local";
 
 
 const timeslotSignal = signal<Map<number, {"Size": number}>>(new Map());
@@ -29,15 +30,15 @@ function NoteCreation ({show, user, update}: Props) {
 
     // Input state information
     const [noteTitle, setNoteTitle] = useState("");
-    const [createdDate, setCreatedDate] = useState("");
-    const [modifiedDate,   setModifiedDate]   = useState("");
+    const [createdDt, setCreatedDt] = useState(0);
+    const [modifiedDt,   setModifiedDt]   = useState(0);
     const [noteText, setNoteText]   = useState("");
 
     // State info for editing event
     const [noteID, setnoteID]     = useState(show.value.noteID);
     const [noteDetails, setNoteDetails] = useState({
-        Title: "<undefined>",
-        Note: "<undefined>",
+        Title: "",
+        Note: "",
         DtCreated: 0,
         DtModified: 0,
     } as NoteResponse); // Makes sure no field is of undefined type
@@ -69,44 +70,55 @@ function NoteCreation ({show, user, update}: Props) {
         }
     }, [noteDetails])
 
+
+    useEffect( () => {
+        populateForm();
+    }, [show.value.noteID])
+
     const handleSaveNote = (online: boolean) => {
         try {
-            const createdDt = dateAndTimeToPosix(createdDate, createdDate);
-            const modDt = dateAndTimeToPosix(createdDate, modifiedDate);
             if (noteID == "none") {
-                try {
-                    makeNote(noteTitle, noteText, createdDt, modDt)
-                        .then( (value ) => {
-                            removeWrongLabelFromInputs(dateInput, startInput, endInput);
-                            setDialogText(`Event created.\nEvent ID: ${value.NoteID}\n${value.Error}`);
-                            clearForm();
-                            hideEditor(show);
-                            update();
-                    });
-                } catch (error: any) {
-                    setDialogText( `${error.message}\n`);
-                    console.warn(error.message);
+                if (online) {
+                    try {
+                        makeNote(noteTitle, noteText, createdDt, modifiedDt)
+                            .then( (value ) => {
+                                removeWrongLabelFromInputs(dateInput, startInput, endInput);
+                                setDialogText(`Event created.\nEvent ID: ${value.NoteID}\n${value.Error}`);
+                                clearForm();
+                                hideEditor(show);
+                                update();
+                        });
+                    } catch (error: any) {
+                        setDialogText( `${error.message}\n`);
+                        console.warn(error.message);
+                    }
+                } else {
+                    saveLocalNote(noteText, posixNow());
                 }
             } else {
-                try {
-                    editNote(noteID, noteTitle, noteText, createdDt, modDt)
-                        .then( (value ) => {
-                            removeWrongLabelFromInputs(dateInput, startInput, endInput);
-                            setDialogText(`Event created.\nEvent ID: ${value.NoteID}\n${value.Error}`);
-                            clearForm();
-                            hideEditor(show);
-                            update();
-                    });
-                } catch (error: any) {
-                    setDialogText( `${error.message}\n`);
-                    console.warn(error.message);
+                if (online) {
+                    try {
+                        editNote(noteID, noteTitle, noteText, createdDt, modifiedDt)
+                            .then( (value ) => {
+                                removeWrongLabelFromInputs(dateInput, startInput, endInput);
+                                setDialogText(`Event created.\nEvent ID: ${value.NoteID}\n${value.Error}`);
+                                clearForm();
+                                hideEditor(show);
+                                update();
+                        });
+                    } catch (error: any) {
+                        setDialogText( `${error.message}\n`);
+                        console.warn(error.message);
+                    }
+                    setConfirmationDialogVisible(true);
+                } else {
+                    saveLocalNote(noteText, createdDt);
                 }
-                setConfirmationDialogVisible(true);
             }
 
         } catch (error) {
             console.error(error);
-            console.error(`Failed to create timestamp from: '${createdDate}', '${modifiedDate}'`);
+            console.error(`Failed to create timestamp from: '${createdDt}', '${modifiedDt}'`);
             labelInputsAsWrong(dateInput, startInput, endInput);
         }
     };
@@ -114,16 +126,21 @@ function NoteCreation ({show, user, update}: Props) {
     const clearForm = () => {
         setNoteTitle("");
         setNoteText("");
-        setCreatedDate("");
-        setModifiedDate("");
+        setCreatedDt(0);
+        setModifiedDt(0);
         timeslotSignal.value = new Map()
     };
 
     const populateForm = () => {
         setNoteTitle(noteDetails.Title);
         setNoteText(noteDetails.Note);
-        setCreatedDate(posixToDate(noteDetails.DtCreated));
-        setModifiedDate(posixToTime(noteDetails.DtModified));
+        if (noteID == "none") {
+            setCreatedDt(posixNow());
+            setModifiedDt(posixNow());
+        } else {
+            setCreatedDt(noteDetails.DtCreated);
+            setModifiedDt(noteDetails.DtModified);
+        }
     };
 
     return (
@@ -141,12 +158,12 @@ function NoteCreation ({show, user, update}: Props) {
                         <button id="close" onClick={ () => hideEditor(show) }>{t("common.close")}</button>
                     </div>
                 </div>
-
+                {noteID}
                 <label className="form-label" htmlFor="start-time">{t("note.created")}</label>
-                <input id="start-time" type="time" value={createdDate} onChange={e => setCreatedDate(e.target.value)} disabled></input>
+                <input id="start-time" type="text" value={posixToDateAndTime(createdDt)} disabled></input>
 
                 <label className="form-label" htmlFor="modified-time">{t("note.modified")}</label>
-                <input id="modified-time" type="time" value={modifiedDate} onChange={e => setModifiedDate(e.target.value)} required></input>
+                <input id="modified-time" type="text" value={posixToDateAndTime(modifiedDt)} disabled></input>
 
                 <label className="form-label" htmlFor="note-text">{t("note.text")}</label>
                 <textarea id="event-desctiption" value={noteText} onChange={e => setNoteText(e.target.value)} required></textarea>
