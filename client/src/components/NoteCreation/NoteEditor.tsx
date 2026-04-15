@@ -1,4 +1,4 @@
-import "./NoteCreation.css";
+import "./NoteEditor.css";
 
 import { useEffect, useState } from "react";
 import { useSignals } from "@preact/signals-react/runtime";
@@ -24,7 +24,7 @@ interface Props {
     update: ()=>Promise<void>
 }
 
-function NoteCreation ({show, user, update}: Props) {
+function NoteEditor ({show, user, update}: Props) {
     useSignals();
     const {t} = useTranslation();
 
@@ -189,7 +189,7 @@ function NoteCreation ({show, user, update}: Props) {
     );
 }
 
-export default NoteCreation;
+export default NoteEditor;
 
 
 const hideEditor = (show: Signal<{noteID: string, view: string}>) => {

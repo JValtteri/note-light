@@ -14,7 +14,7 @@ import { loadLocalNote } from './api/local';
 const EventList = lazy( () => import('./components/NoteList/NoteList'));
 const DetailCard = lazy(() => import('./components/DetailCard/DetailCard'));
 const LoginDialog = lazy(() => import('./components/Login/Login'));
-const NoteCreation = lazy(() => import('./components/NoteCreation/NoteCreation'));
+const NoteEditor = lazy(() => import('./components/NoteCreation/NoteEditor'));
 const UserForm = lazy( () => import('./components/UserForm/UserForm'));
 const Popup = lazy(() => import('./components/Popup/Popup'));
 
@@ -57,7 +57,7 @@ function App() {
                     {["account", "inspect"].includes(show.value.view) &&
                         <UserForm user={user} show={show} />}
                     {show.value.view == "editor" &&
-                        <NoteCreation show={show} user={user} update={ updateNotesHandler } />}
+                        <NoteEditor show={show} user={user} update={ updateNotesHandler } />}
                 </Suspense>
             </div>
             <Suspense>
