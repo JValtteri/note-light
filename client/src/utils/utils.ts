@@ -72,5 +72,12 @@ export function base64(str: string) {
 /* Converts Base64 to str, via uint8
  */
 export function decode64(str: string) {
-    return atob(str);
+    const binaryString = atob(str);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    // Convert the byte array back to a string using TextDecoder
+    const decoder = new TextDecoder();
+    return decoder.decode(bytes);
 }
