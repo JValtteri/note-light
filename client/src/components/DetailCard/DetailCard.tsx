@@ -36,20 +36,20 @@ function DetailCard( {show, user, requestedUpdate}: Props ) {
     const loadDetailsHandler = loadDetails(show, loadingNotes, setNoteDetails);
 
     const handleDeleteEvent = () => {
-        if (show.value.noteID) {
+        const targetID = show.value.noteID;
+        handleClose();
+        if (targetID[0] != "L") {
             try {
-                deleteNote(show.value.noteID)
+                deleteNote(targetID)
                     .then( () => {
-                        handleClose();
                         requestUpdate();
                     });
             } catch (error: any) {
                 console.warn(error.message);
             }
         } else {
-            deleteLocalNote();
+            deleteLocalNote(targetID);
             requestUpdate();
-            handleClose();
         }
     }
 
@@ -57,7 +57,7 @@ function DetailCard( {show, user, requestedUpdate}: Props ) {
         if (user.value.loggedIn) {
             loadDetailsHandler();
         } else {
-            setNoteDetails(loadLocalNote());
+            setNoteDetails(loadLocalNote(show.value.noteID));
         }
     }, [show.value.noteID, requestedUpdate.value]);
 

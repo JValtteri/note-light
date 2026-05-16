@@ -63,9 +63,13 @@ const makeCard = (note: NoteResponse, show: Signal, update: ()=>Promise<void> ) 
             show.value = showIndex(note.ID, show)
             update();
         } }
-        selected={ show.value.eventID == note.ID }
+        selected={ show.value.noteID == note.ID }
         className={ "event-list-card" }
     />
 )
 
-const showIndex = (id: number, show: Signal) => ({eventID: id, view: show.value.view == "inspect" ? "inspect" : ""});
+const showIndex = (id: string, show: Signal) => (
+    {
+        noteID: id,
+        view: show.value.view == "inspect" ? "inspect" : ""
+    });

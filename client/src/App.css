@@ -8,6 +8,9 @@
 .view {
   display: grid;
   grid-template-columns: 350px auto;
+  grid-template-areas:
+    "title title"
+    "list details"
 }
 
 .logo {

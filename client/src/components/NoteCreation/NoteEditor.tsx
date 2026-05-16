@@ -12,7 +12,7 @@ import { useTranslation } from "../../context/TranslationContext";
 
 import Frame from "../common/Frame/Frame";
 import Popup from "../Popup/Popup";
-import { loadLocalNote, saveLocalNote } from "../../api/local";
+import { editLocalNote, loadLocalNote, saveLocalNote } from "../../api/local";
 
 
 const timeslotSignal = signal<Map<number, {"Size": number}>>(new Map());
@@ -58,8 +58,8 @@ function NoteEditor ({show, user, update}: Props) {
         setnoteID(show.value.noteID);
         if (show.value.noteID == "none") {
             clearForm();
-        } else if (show.value.noteID == "local") {
-            setNoteDetails(loadLocalNote());
+        } else if (show.value.noteID[0] == "L") {
+            setNoteDetails(loadLocalNote(show.value.noteID));
         } else {
             loadDetailsHandler();
         }
@@ -95,7 +95,10 @@ function NoteEditor ({show, user, update}: Props) {
                         console.warn(error.message);
                     }
                 } else {
-                    saveLocalNote(noteText, posixNow());
+                    const now = posixNow();
+                    setnoteID(`L${now}`);
+                    setCreatedDt(now);
+                    saveLocalNote(noteText, now);
                     update();
                 }
             } else {
@@ -115,7 +118,7 @@ function NoteEditor ({show, user, update}: Props) {
                     }
                     setConfirmationDialogVisible(true);
                 } else {
-                    saveLocalNote(noteText, createdDt);
+                    editLocalNote(noteText, createdDt, noteID);
                     update();
                 }
             }
@@ -144,6 +147,7 @@ function NoteEditor ({show, user, update}: Props) {
         } else {
             setCreatedDt(noteDetails.DtCreated);
             setModifiedDt(noteDetails.DtModified);
+            console.log(`Loaded Set ${noteDetails.DtCreated}`)
         }
     };
 

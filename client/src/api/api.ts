@@ -12,7 +12,7 @@ interface NoteCreationResponse {
 }
 
 export interface NoteResponse {
-    ID:                 number;
+    ID:                 string;
     Title:              string;
     Note:               string;
     DtCreated:          number;

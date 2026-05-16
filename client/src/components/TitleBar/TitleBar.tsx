@@ -52,9 +52,7 @@ function TitleBar({title, icon, showLogin, user, show: show}: Props) {
                 <img id="logo" src={ icon ? icon : './logo.png' } fetchPriority='low' />
             </Suspense>
             <div />
-            <span id='title'>
-                {title ? title : "< Title >"}
-            </span>
+
 
             <LanguageSelector />
 
