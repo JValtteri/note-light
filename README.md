@@ -34,6 +34,15 @@ Offline notes for quick personal notes, when you really need to write something 
 
 ## How to Deploy With Docker
 
+Run auto-setup
+```
+curl -fsSL "https://raw.githubusercontent.com/JValtteri/qure/refs/heads/main/setup.sh | sh"
+```
+
+### Manual install
+
+> These instructions lag behind development. It's recommended to use the setup script.
+
 ```
 note-light
  ├─ docker-compose.yml
@@ -44,6 +53,8 @@ note-light
  └─ images     (optional)
     └─ ...
 ```
+
+**NOTE** container uses user `note` UID `10011`. Make sure the file permissions are approptiate.
 
 1. Copy [docker-compose.yml](../docker-compose.yml).
 1. Copy [config.json.example](../server/config.json.example) and rename it to `config.json`.
