@@ -63,7 +63,7 @@ function NoteEditor ({show, user, update}: Props) {
         } else {
             loadDetailsHandler();
         }
-    }, [show.value.view, show.value.noteID])
+    }, [show.value])
 
     useEffect( () => {
         setnoteID(show.value.noteID);
@@ -96,9 +96,8 @@ function NoteEditor ({show, user, update}: Props) {
                     }
                 } else {
                     const now = posixNow();
-                    setnoteID(`L${now}`);
-                    setCreatedDt(now);
                     saveLocalNote(noteText, now);
+                    show.value = {"noteID": `L${now}`, view: ""};
                     update();
                 }
             } else {

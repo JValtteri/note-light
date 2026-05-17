@@ -21,7 +21,7 @@ interface Props {
 function NoteList({items, show, update}: Props) {
     useSignals();
 
-    items = items.sort( (a, b) => a.DtModified - b.DtModified );
+    items = items.sort( (b, a) => a.DtModified - b.DtModified );
     const children: ReactNode[] = (
         items.map( (item: NoteResponse) => {
             return makeListElement(item, show, update);
@@ -31,7 +31,9 @@ function NoteList({items, show, update}: Props) {
         <Frame reactive={false} className='list-body'>
             {items.length === 0 && <p>no item found</p>}
             {children}
-            <AddCard onClick={ () => show.value = showEditor() } />
+            <AddCard onClick={ () => {
+                show.value = showEditor()
+            } } />
         </Frame>
     )
 }
