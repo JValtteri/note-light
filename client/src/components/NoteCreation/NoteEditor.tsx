@@ -7,7 +7,7 @@ import { signal, type Signal } from "@preact/signals-react";
 import { posixToDateAndTime, posixNow } from "../../utils/utils";
 import type { NoteResponse } from "../../api/api";
 import { makeNote, editNote } from "../../api/api";
-import { loadDetails } from "../common/utils";
+import { loadDetails, setTitle } from "../common/utils";
 import { useTranslation } from "../../context/TranslationContext";
 
 import Frame from "../common/Frame/Frame";
@@ -82,7 +82,7 @@ function NoteEditor ({show, user, update}: Props) {
             if (noteID == "none") {
                 if (online) {
                     try {
-                        makeNote(noteTitle, noteText, createdDt, modifiedDt)
+                        makeNote(setTitle(noteText), noteText, createdDt, modifiedDt)
                             .then( (value ) => {
                                 removeWrongLabelFromInputs(dateInput, startInput, endInput);
                                 setDialogText(`Event created.\nEvent ID: ${value.NoteID}\n${value.Error}`);
@@ -104,7 +104,7 @@ function NoteEditor ({show, user, update}: Props) {
             } else {
                 if (online) {
                     try {
-                        editNote(noteID, noteTitle, noteText, createdDt, modifiedDt)
+                        editNote(noteID, setTitle(noteText), noteText, createdDt, modifiedDt)
                             .then( (value ) => {
                                 removeWrongLabelFromInputs(dateInput, startInput, endInput);
                                 setDialogText(`Event created.\nEvent ID: ${value.NoteID}\n${value.Error}`);

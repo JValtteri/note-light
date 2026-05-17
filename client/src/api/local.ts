@@ -1,3 +1,4 @@
+import { setTitle } from "../components/common/utils";
 import { setLocalStorage, getLocalStorage, clearLocalStorage } from "../utils/local_storage";
 import { base64, decode64, posixNow } from "../utils/utils";
 import type { NoteListResponse, NoteResponse } from "./api";
@@ -43,7 +44,7 @@ export function loadLocalNote(id: string): NoteResponse {
 
     return {
         ID:                 `L${created}`,
-        Title:              text.split(" ", 1)[0],
+        Title:              setTitle(text),
         Note:               text,
         DtCreated:          created,
         DtModified:         modified

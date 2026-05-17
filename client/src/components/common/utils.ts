@@ -51,3 +51,23 @@ export async function resumeSession(
         setErrorVisible && setErrorVisible(true);
     }
 }
+
+export function setTitle(text: string): string {
+    const cutLimit = 10;
+    const nonList = text.split("- ", 1);
+    const words = nonList[0].split(" ", 2);
+    const candidate1 = words[0];
+    if (candidate1.length > 3) {
+        return candidate1;
+    }
+    if (words.length > 1) {
+        const candidate2 = `${words[0]} ${words[1]}`
+        return candidate2;
+    }
+    if (text.length < cutLimit) {
+        return text;
+    }
+    else {
+        return text.slice(0, cutLimit);
+    }
+}
