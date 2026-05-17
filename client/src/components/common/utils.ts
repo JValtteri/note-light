@@ -54,20 +54,32 @@ export async function resumeSession(
 
 export function setTitle(text: string): string {
     const cutLimit = 10;
-    const nonList = text.split("- ", 1);
-    const words = nonList[0].split(" ", 2);
+
+    text = removeSpecialCharacters(text);
+    text = text.split(`\n`, 1)[0];          // Use only first line for title
+    const words = text.split(" ", 2);
+
     const candidate1 = words[0];
-    if (candidate1.length > 3) {
-        return candidate1;
+    if (text.length < cutLimit) {
+        return text;
     }
-    if (words.length > 1) {
+    if (words.length > 1 && (words[0].length + words[1].length) <= cutLimit ) {
         const candidate2 = `${words[0]} ${words[1]}`
         return candidate2;
     }
-    if (text.length < cutLimit) {
-        return text;
+    if (candidate1.length < cutLimit) {
+        return candidate1;
     }
     else {
         return text.slice(0, cutLimit);
     }
+}
+
+function removeSpecialCharacters(text: string) {
+    text = text.replaceAll("- ", "");
+    text = text.replaceAll("# ", "");
+    text = text.replaceAll("#", "");
+    text = text.replaceAll("_", "");
+    text = text.replaceAll("*", "");
+    return text;
 }
