@@ -1,6 +1,6 @@
 .title {
     display: grid;
-    grid-template-columns: 4em 12.8em auto min-content min-content min-content;
+    grid-template-columns: 4em auto min-content min-content min-content;
     grid-column-start: 1;
     grid-column-end: 3;
     column-gap: 0.5em;

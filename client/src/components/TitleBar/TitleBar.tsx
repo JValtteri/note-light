@@ -61,17 +61,32 @@ function TitleBar({title, icon, showLogin, user, show: show}: Props) {
                 id='menu-button'
                 onClick={ handleHamburgerMenu }
                 hidden={!user.value.loggedIn}
-                className={show.value.view == "account" ? 'selected' : ''
-            }>
+                className={show.value.view == "account" ? 'selected' : ''}
+            >
                 <div id='user'>
                     {user.value.username.split('@')[0]}
                     {user.value.role === "admin" && "(admin)"}
                     {user.value.role === "staff" && "⭐"}
                 </div>
             </button>
-            <button hidden={user.value.loggedIn === false} className='mobile' onClick={ handleLogout }>{"🔒"}</button>
-            <button hidden={user.value.loggedIn === false} className='no-wrap desktop' onClick={ handleLogout }>{t("login.logout")}</button>
-            <button hidden={user.value.loggedIn === true} className='no-wrap' onClick={ handleLogin }>{t("login.login")}</button>
+            <button
+                hidden={user.value.loggedIn === false}
+                className='mobile'
+                onClick={ handleLogout }
+                disabled={true /* Temporarely disabled, since not implemented */}
+            >{"🔒"}</button>
+            <button
+                hidden={user.value.loggedIn === false}
+                className='no-wrap desktop'
+                onClick={ handleLogout }
+                disabled={true /* Temporarely disabled, since not implemented */}
+            >{t("login.logout")}</button>
+            <button
+                hidden={user.value.loggedIn === true}
+                className='no-wrap'
+                onClick={ handleLogin }
+                disabled={true /* Temporarely disabled, since not implemented */}
+            >{t("login.login")}</button>
         </Frame>
     )
 }
