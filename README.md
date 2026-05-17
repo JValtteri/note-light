@@ -2,9 +2,16 @@
 
 [![Docker Image Build](https://github.com/JValtteri/note-light/actions/workflows/build-docker-image.yml/badge.svg)](https://github.com/JValtteri/note-light/actions/workflows/build-docker-image.yml)
 
-##### Fast, light weight notetaking web-app
+> **Not feature complete**
+
+Fast, light weight notetaking web-app.
 
 Offline notes for quick personal notes, when you really need to write something down quickly.
+
+### Intended primary use case is to use on a smart phone and "install" it, to use like an app.
+
+- On Android this is done with Google Chrome and selecting [**add to home screen**](https://support.google.com/chrome/answer/9658361?hl=en&co=GENIE.Platform%3DAndroid).
+- On iPhone [**follow this guide**](https://support.apple.com/guide/iphone/open-as-web-app-iphea86e5236/ios)
 
 ## Planned features
 
