@@ -36,7 +36,7 @@ Offline notes for quick personal notes, when you really need to write something 
 
 Run auto-setup
 ```
-curl -fsSL "https://raw.githubusercontent.com/JValtteri/qure/refs/heads/main/setup.sh | sh"
+curl -fsSL "https://raw.githubusercontent.com/JValtteri/note-light/refs/heads/main/setup.sh" | sh
 ```
 
 ### Manual install

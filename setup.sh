@@ -1,9 +1,9 @@
 #!/bin/bash
 
-USER=note
-GROUPNAME=$USER
-UID=10011
-GID=20012
+NUSER=note
+NGROUPNAME=$NUSER
+NUID=10011
+NGID=20012
 
 no_color=$(echo -e "\033[0m")
 yellow=$(echo -e "\033[1;33m")
@@ -23,25 +23,27 @@ echo "logo.png"
 curl -O "https://raw.githubusercontent.com/JValtteri/qure/note-light/heads/main/client/public/logo.png"
 
 echo -e "\n${yellow}Creating Dedicated User${no_color}"
-echo "name=$USER UID=$UID"
-addgroup \
-    --gid "$GID" \
-    "$GROUPNAME" \
-&& adduser \
+echo "name=$NUSER UID=$NUID : group=$NGROUPNAME GID=$NGID"
+sudo addgroup \
+    --gid "$NGID" \
+    "$NGROUPNAME"
+sudo adduser \
     --disabled-password \
     --gecos "" \
-    --ingroup "$GROUPNAME" \
+    --ingroup "$NGROUPNAME" \
     --no-create-home \
-    --uid "$UID" \
-    $USER
+    --uid "$NUID" \
+    $NUSER
 
 echo -e "\n${yellow}Preparing mount folders${no_color}"
 echo "./db/"
 mkdir db
-sudo chown -R $USER db/
+sudo chown -R "$NUSER":"$NGROUPNAME" db/
 echo "./images/"
 mkdir images
-sudo chown -R $USER images/
+sudo chown -R "$NUSER":"$NGROUPNAME" images/
+echo "./logo.png"
+sudo chown "$NUSER":"$NGROUPNAME" logo.png
 
 echo -e "\n${green}Setup Complete${no_color}"
 echo -e "Customize the ${yellow}config.json${no_color} according to your preferences."
