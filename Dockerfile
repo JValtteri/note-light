@@ -40,6 +40,29 @@ RUN case "${TARGETPLATFORM}" in \
 RUN go build .
 
 # ------------------------------------------------------------------
+# Setup a non-privileged user
+# ------------------------------------------------------------------
+
+FROM alpine:latest AS user
+
+ENV USER=note
+ENV GROUPNAME=$USER
+ENV UID=10011
+ENV GID=20012
+
+RUN addgroup \
+    --gid "$GID" \
+    "$GROUPNAME" \
+&& adduser \
+    --disabled-password \
+    --gecos "" \
+    --ingroup "$GROUPNAME" \
+    --no-create-home \
+    --uid "$UID" \
+    $USER
+
+
+# ------------------------------------------------------------------
 # Final scratch image
 # ------------------------------------------------------------------
 
@@ -47,9 +70,13 @@ FROM scratch AS Final
 
 WORKDIR /app/server
 
+# Copy and use non-privileged user
+COPY --from=user /etc/passwd /etc/passwd
+USER note
+
+# Copy frontend and backend files
 COPY --from=backend /app/server /app/server/server
 COPY ./server/ATTRIBUTION /app/server/ATTRIBUTION
-
 COPY --from=frontend /app/dist /app/client/dist
 
 EXPOSE 8080
