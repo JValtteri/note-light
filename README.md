@@ -1,24 +1,15 @@
 # Note-Light
 
-[![Frontend Tests](https://github.com/JValtteri/note-light/actions/workflows/frontend-tests.yml/badge.svg)](https://github.com/JValtteri/note-light/actions/workflows/frontend-tests.yml)
-[![Backend Tests](https://github.com/JValtteri/note-light/actions/workflows/backend-tests.yml/badge.svg)](https://github.com/JValtteri/note-light/actions/workflows/backend-tests.yml)
 [![Docker Image Build](https://github.com/JValtteri/note-light/actions/workflows/build-docker-image.yml/badge.svg)](https://github.com/JValtteri/note-light/actions/workflows/build-docker-image.yml)
 
-![Frontend Coverage](https://github.com/JValtteri/note-light/blob/badges/.badges/main/frontend-coverage-badge.svg)
-![Backend Coverage](https://github.com/JValtteri/note-light/blob/badges/.badges/main/backend-coverage-badge.svg)
-
 ##### Fast, light weight notetaking web-app
-
-```diff
-- Not ready to use!
-```
 
 Offline notes for quick personal notes, when you really need to write something down quickly.
 
 ## Planned features
 
 - [x] Offline note
-- [ ] Multiple offline notes
+- [x] Multiple offline notes
 - [ ] Online notes (with registered users)
 - [ ] Shared notes with a share link
 
@@ -69,9 +60,11 @@ docker logs note-light
 
 You can use the app without loggin in. The notes in this case are saved in browser local storage and are available on the same device on the same browser.
 
-**Warning!** Offline notes may be deleted, if you reinstall your browser, delete browser data or change devices. Offline notes are not intended for long therm storage of importand data.
+**Warning!** Offline notes may be deleted if you reinstall your browser, delete browser data or change devices. Offline notes are not intended for long therm storage of importand data.
 
 ## How to Administer
+
+**Registered users are not yet operational. I plan to get to it at some point.**
 
 ### Admin account
 
