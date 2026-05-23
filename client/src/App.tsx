@@ -54,10 +54,12 @@ function App() {
                 <Suspense fallback={<Spinner />}>
                     {(show.value.noteID != "none" && show.value.view == "" ) &&
                         <DetailCard show={show} user={user} requestedUpdate={requestedUpdate} />}
-                    {["account", "inspect"].includes(show.value.view) &&
-                        <UserForm user={user} show={show} />}
                     {show.value.view == "editor" &&
                         <NoteEditor show={show} user={user} update={ updateNotesHandler } />}
+                </Suspense>
+                <Suspense fallback={<Spinner />}>
+                    {["account", "inspect"].includes(show.value.view) &&
+                        <UserForm user={user} show={show} />}
                 </Suspense>
             </div>
             <Suspense>
